@@ -29,3 +29,5 @@ wwwroot/lib/
 
 # Publish output
 publish/
+
+FireBaseServiceKey.json
