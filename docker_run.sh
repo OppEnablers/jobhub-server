@@ -11,7 +11,10 @@ if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
     docker rm $CONTAINER_NAME
 fi
 
+docker build -f JobHubServer/Dockerfile -t $IMAGE_NAME .
 docker run -d \
   --name $CONTAINER_NAME \
   -p $HOST_PORT:$CONTAINER_PORT \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/app/keys/FireBaseServiceKey.json \
+  -v ./FireBaseServiceKey.json:/app/keys/FireBaseServiceKey.json \
   $IMAGE_NAME
