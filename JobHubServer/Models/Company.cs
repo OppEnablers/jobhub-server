@@ -6,10 +6,10 @@ namespace JobHubServer.Models
     [FirestoreData]
     public class Company
     {
-        [FirestoreProperty]
-        public string name { get; set; }
+        [FirestoreProperty("name")]
+        public string Name { get; set; } = "";
 
-        [FirestoreProperty]
-        public string address { get; set; }
+        [FirestoreProperty("address")]
+        public string Address { get; set; } = "";
     }
 }
