@@ -16,6 +16,7 @@ namespace JobHubServer.Firebase
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             string authorization = Request.Headers.Authorization.ToString();
+            string? userId = Request.Headers?["user_id"];
 
             if (string.IsNullOrEmpty(authorization))
             {
@@ -29,6 +30,12 @@ namespace JobHubServer.Firebase
                 try
                 {
                     FirebaseToken firebaseToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(idToken);
+
+                    if (!string.IsNullOrEmpty(userId) && userId != firebaseToken.Uid)
+                    {
+                        return AuthenticateResult.Fail("User ID does not match token.");
+                    }
+
                     ClaimsPrincipal principal = new();
                     principal.AddIdentity(new ClaimsIdentity(ToClaims(firebaseToken), "firebase"));
                     AuthenticationTicket ticket = new(principal, JwtBearerDefaults.AuthenticationScheme);
