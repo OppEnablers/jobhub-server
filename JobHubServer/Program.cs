@@ -20,7 +20,11 @@ namespace JobHubServer
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(c =>
+                {
+                    c.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.SnakeCaseLower;
+                });
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -34,7 +38,10 @@ namespace JobHubServer
 
             // Firebase custom token authentication
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddScheme<AuthenticationSchemeOptions, FirebaseAuthHandler>(JwtBearerDefaults.AuthenticationScheme, o => { });
+                .AddScheme<AuthenticationSchemeOptions, FirebaseAuthHandler>(JwtBearerDefaults.AuthenticationScheme, c => { });
+            builder.Services.AddAuthorizationBuilder()
+                .AddPolicy("JobSeekers", policy => policy.RequireClaim("user_type", ["jobseeker"]))
+                .AddPolicy("Employers", policy => policy.RequireClaim("user_type", ["employer"]));
 
             var app = builder.Build();
 
