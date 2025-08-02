@@ -41,7 +41,7 @@ namespace JobHubServer
                 .AddScheme<AuthenticationSchemeOptions, FirebaseAuthHandler>(JwtBearerDefaults.AuthenticationScheme, c => { });
             builder.Services.AddAuthorizationBuilder()
                 .AddPolicy("JobSeekers", policy => policy.RequireClaim("user_type", ["jobseeker"]))
-                .AddPolicy("Employer", policy => policy.RequireClaim("user_type", ["employer"]));
+                .AddPolicy("Employers", policy => policy.RequireClaim("user_type", ["employer"]));
 
             var app = builder.Build();
 

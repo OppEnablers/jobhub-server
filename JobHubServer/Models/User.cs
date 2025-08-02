@@ -5,7 +5,6 @@ namespace JobHubServer.Models
     [FirestoreData]
     public class User
     {
-
         [FirestoreProperty("user_id")]
         public string UserId { get; set; } = "";
 

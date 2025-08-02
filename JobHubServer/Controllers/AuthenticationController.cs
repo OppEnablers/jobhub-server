@@ -44,6 +44,13 @@ namespace JobHubServer.Controllers
             return await _firebaseAuth.CreateCustomTokenAsync("debug-server");
         }
 
+        [Authorize(Roles = "JobSeeker")]
+        [HttpGet("test_js")]
+        public ActionResult TestForJobSeeker()
+        {
+            return Ok();
+        }
+
         private IReadOnlyDictionary<string, object> SetClaims(string userType)
         {
             return new Dictionary<string, object>()

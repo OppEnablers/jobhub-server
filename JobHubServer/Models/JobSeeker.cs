@@ -25,5 +25,8 @@ namespace JobHubServer.Models
 
         [FirestoreProperty("work_experience")]
         public string WorkExperience { get; set; } = "";
+
+        [FirestoreProperty("declined_jobs")]
+        public List<string> DeclinedJobs { get; set; } = [];
     }
 }

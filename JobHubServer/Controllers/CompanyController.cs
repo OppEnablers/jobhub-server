@@ -15,8 +15,7 @@ namespace JobHubServer.Controllers
 
         [HttpGet("get")]
         public async Task<IEnumerable<Company>> GetCompanies()
-        {
-            
+        {            
             var colRef = db.Collection(CollectionName);
             var snapshot = await colRef.GetSnapshotAsync();
 
